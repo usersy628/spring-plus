@@ -1,0 +1,42 @@
+package org.example.expert.domain.todo.repository;
+
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.Optional;
+
+import org.example.expert.config.PersistenceConfig;
+import org.example.expert.domain.todo.entity.Todo;
+import org.example.expert.domain.user.entity.User;
+import org.example.expert.domain.user.enums.UserRole;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+
+@DataJpaTest
+@Import(PersistenceConfig.class)
+class TodoRepositoryTest {
+
+	@Autowired
+	private TodoRepository todoRepository;
+
+	@Autowired
+	private TestEntityManager entityManager;
+
+	@Test
+	void findByIdWithUser는_todo와_user를_함께_조회한다() {
+		User user = new User("test@email.com", "password", UserRole.USER, "nickname");
+		entityManager.persist(user);
+
+		Todo todo = new Todo("title", "contents", "Sunny", user);
+		entityManager.persist(todo);
+		entityManager.flush();
+		entityManager.clear();
+
+		Optional<Todo> result = todoRepository.findByIdWithUser(todo.getId());
+
+		assertThat(result).isPresent();
+		assertThat(result.get().getUser().getEmail()).isEqualTo("test@email.com");
+	}
+}
