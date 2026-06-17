@@ -9,6 +9,7 @@ import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
+import org.example.expert.domain.todo.dto.response.TodoSearchResponse;
 import org.example.expert.domain.todo.service.TodoService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,19 @@ public class TodoController {
 
 	) {
 		return ResponseEntity.ok(todoService.getTodos(page, size, weather, createdAt, modifiedAt));
+	}
+
+	@GetMapping("/todos/search")
+	public ResponseEntity<Page<TodoSearchResponse>> searchTodos(
+		@RequestParam(required = false) String title,
+		@RequestParam(required = false) LocalDateTime createdFrom,
+		@RequestParam(required = false) LocalDateTime createdTo,
+		@RequestParam(required = false) String managerNickname,
+		@RequestParam(defaultValue = "1") int page,
+		@RequestParam(defaultValue = "10") int size
+	) {
+		return ResponseEntity.ok(
+			todoService.searchTodos(title, createdFrom, createdTo, managerNickname, page, size));
 	}
 
 	@GetMapping("/todos/{todoId}")
