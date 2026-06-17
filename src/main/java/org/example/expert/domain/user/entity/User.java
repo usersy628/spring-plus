@@ -30,12 +30,14 @@ public class User extends Timestamped {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
+        this.nickname = nickname;
     }
 
     private User(Long id, String email, UserRole userRole, String nickname) {
         this.id = id;
         this.email = email;
         this.userRole = userRole;
+        this.nickname = nickname;
     }
 
     public static User fromAuthUser(AuthUser authUser) {
