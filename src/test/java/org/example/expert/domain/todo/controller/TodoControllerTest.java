@@ -22,6 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.example.expert.global.jwt.JwtUtil;
+
 @WebMvcTest(TodoController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class TodoControllerTest {
@@ -31,6 +33,9 @@ class TodoControllerTest {
 
 	@MockBean
 	private TodoService todoService;
+
+	@MockBean
+	private JwtUtil jwtUtil;
 
 	@Test
 	void todo_단건_조회에_성공한다() throws Exception {

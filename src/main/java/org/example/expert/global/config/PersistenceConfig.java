@@ -1,4 +1,4 @@
-package org.example.expert.config;
+package org.example.expert.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

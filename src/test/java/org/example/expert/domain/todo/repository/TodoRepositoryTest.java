@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
 
-import org.example.expert.config.PersistenceConfig;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
+import org.example.expert.global.config.PersistenceConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

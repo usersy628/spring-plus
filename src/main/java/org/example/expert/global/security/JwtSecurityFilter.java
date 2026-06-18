@@ -1,10 +1,11 @@
-package org.example.expert.config;
+package org.example.expert.global.security;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.user.enums.UserRole;
+import org.example.expert.global.jwt.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package org.example.expert.config;
+package org.example.expert.global.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
