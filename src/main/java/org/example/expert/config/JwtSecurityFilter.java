@@ -36,7 +36,11 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 	) throws ServletException, IOException {
 		String url = request.getRequestURI();
 
-		if (url.startsWith("/auth")) {
+		if (
+			url.startsWith("/auth") ||
+				url.equals("/chat.html") ||
+				url.startsWith("/ws/chat")
+		) {
 			filterChain.doFilter(request, response);
 			return;
 		}
