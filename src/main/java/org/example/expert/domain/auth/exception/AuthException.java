@@ -1,8 +1,11 @@
 package org.example.expert.domain.auth.exception;
 
-public class AuthException extends RuntimeException {
+import org.example.expert.domain.common.exception.DomainException;
+import org.springframework.http.HttpStatus;
 
-    public AuthException(String message) {
-        super(message);
-    }
+public class AuthException extends DomainException {
+
+	public AuthException(String message) {
+		super(HttpStatus.UNAUTHORIZED, message);
+	}
 }

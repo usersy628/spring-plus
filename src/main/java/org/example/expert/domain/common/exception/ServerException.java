@@ -1,8 +1,10 @@
 package org.example.expert.domain.common.exception;
 
-public class ServerException extends RuntimeException {
+import org.springframework.http.HttpStatus;
 
-    public ServerException(String message) {
-        super(message);
-    }
+public class ServerException extends DomainException {
+
+	public ServerException(String message) {
+		super(HttpStatus.INTERNAL_SERVER_ERROR, message);
+	}
 }
