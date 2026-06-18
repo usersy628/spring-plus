@@ -10,6 +10,9 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 담당자 등록 요청 기록을 저장하는 로그 엔티티입니다.
+ */
 @Entity
 @Getter
 @NoArgsConstructor
@@ -26,6 +29,14 @@ public class Log {
 	private String requestType;
 	private LocalDateTime createdAt;
 
+	/**
+	 * 담당자 등록 요청 로그를 생성합니다.
+	 *
+	 * @param requesterId 요청을 보낸 사용자 ID
+	 * @param todoId 대상 일정 ID
+	 * @param managerUserId 등록하려는 담당자 사용자 ID
+	 * @param requestType 요청 종류
+	 */
 	public Log(Long requesterId, Long todoId, Long managerUserId, String requestType) {
 		this.requesterId = requesterId;
 		this.todoId = todoId;

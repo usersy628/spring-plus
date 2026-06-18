@@ -24,6 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.example.expert.global.jwt.JwtUtil;
 
+/**
+ * TodoController의 일정 단건 조회 API와 예외 응답을 검증하는 테스트입니다.
+ */
 @WebMvcTest(TodoController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class TodoControllerTest {
@@ -37,6 +40,9 @@ class TodoControllerTest {
 	@MockBean
 	private JwtUtil jwtUtil;
 
+	/**
+	 * 일정 단건 조회 성공 시 응답 본문에 일정 ID와 제목이 포함되는지 검증합니다.
+	 */
 	@Test
 	void todo_단건_조회에_성공한다() throws Exception {
 		// given
@@ -65,6 +71,9 @@ class TodoControllerTest {
 			.andExpect(jsonPath("$.title").value(title));
 	}
 
+	/**
+	 * 존재하지 않는 일정 조회 시 전역 예외 응답 형식으로 400 응답이 내려오는지 검증합니다.
+	 */
 	@Test
 	void todo_단건_조회_시_todo가_존재하지_않아_예외가_발생한다() throws Exception {
 		// given

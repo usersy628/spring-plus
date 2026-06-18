@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 댓글 저장과 일정별 댓글 조회 비즈니스 로직을 담당하는 서비스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,6 +29,14 @@ public class CommentService {
     private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
 
+    /**
+     * 인증된 사용자가 특정 일정에 댓글을 작성합니다.
+     *
+     * @param authUser 인증된 사용자 정보
+     * @param todoId 댓글을 작성할 일정 ID
+     * @param commentSaveRequest 댓글 저장 요청
+     * @return 저장된 댓글 응답
+     */
     @Transactional
     public CommentSaveResponse saveComment(AuthUser authUser, long todoId, CommentSaveRequest commentSaveRequest) {
         User user = User.fromAuthUser(authUser);
@@ -47,6 +58,12 @@ public class CommentService {
         );
     }
 
+    /**
+     * 특정 일정의 댓글 목록을 작성자 정보와 함께 조회합니다.
+     *
+     * @param todoId 댓글을 조회할 일정 ID
+     * @return 댓글 응답 목록
+     */
     public List<CommentResponse> getComments(long todoId) {
         List<Comment> commentList = commentRepository.findByTodoIdWithUser(todoId);
 

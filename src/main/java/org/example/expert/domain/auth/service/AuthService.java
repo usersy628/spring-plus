@@ -15,6 +15,9 @@ import org.example.expert.global.security.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 회원가입과 로그인을 담당하는 인증 서비스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -24,6 +27,12 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    /**
+     * 이메일 중복을 확인한 뒤 사용자를 생성하고 JWT를 발급합니다.
+     *
+     * @param signupRequest 회원가입 요청
+     * @return 발급된 JWT를 담은 회원가입 응답
+     */
     @Transactional
     public SignupResponse signup(SignupRequest signupRequest) {
 
@@ -48,11 +57,16 @@ public class AuthService {
         return new SignupResponse(bearerToken);
     }
 
+    /**
+     * 이메일과 비밀번호를 검증한 뒤 JWT를 발급합니다.
+     *
+     * @param signinRequest 로그인 요청
+     * @return 발급된 JWT를 담은 로그인 응답
+     */
     public SigninResponse signin(SigninRequest signinRequest) {
         User user = userRepository.findByEmail(signinRequest.getEmail()).orElseThrow(
                 () -> new InvalidRequestException("가입되지 않은 유저입니다."));
 
-        // 로그인 시 이메일과 비밀번호가 일치하지 않을 경우 401을 반환합니다.
         if (!passwordEncoder.matches(signinRequest.getPassword(), user.getPassword())) {
             throw new AuthException("잘못된 비밀번호입니다.");
         }

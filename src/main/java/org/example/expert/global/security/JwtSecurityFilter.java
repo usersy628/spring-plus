@@ -24,6 +24,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 요청의 JWT를 검증하고 인증 정보를 SecurityContext에 저장하는 필터입니다.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -31,6 +34,15 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 
 	private final JwtUtil jwtUtil;
 
+	/**
+	 * 인증 제외 경로는 통과시키고, 그 외 요청은 JWT를 검증해 인증 객체를 등록합니다.
+	 *
+	 * @param request HTTP 요청
+	 * @param response HTTP 응답
+	 * @param filterChain 다음 필터 체인
+	 * @throws ServletException 필터 처리 중 발생하는 서블릿 예외
+	 * @throws IOException 필터 처리 중 발생하는 입출력 예외
+	 */
 	@Override
 	protected void doFilterInternal(
 		HttpServletRequest request, HttpServletResponse response, FilterChain filterChain

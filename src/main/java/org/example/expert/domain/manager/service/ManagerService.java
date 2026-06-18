@@ -22,6 +22,9 @@ import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 일정 담당자 등록, 조회, 삭제 비즈니스 로직을 담당하는 서비스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,16 +35,24 @@ public class ManagerService {
 	private final TodoRepository todoRepository;
 	private final LogService logService;
 
+	/**
+	 * 일정 작성자가 특정 사용자를 담당자로 등록합니다.
+	 *
+	 * <p>담당자 등록 요청은 먼저 로그로 저장하고, 이후 작성자 검증과 담당자 검증을 수행합니다.</p>
+	 *
+	 * @param authUser 인증된 사용자 정보
+	 * @param todoId 담당자를 등록할 일정 ID
+	 * @param managerSaveRequest 등록할 담당자 사용자 ID를 담은 요청
+	 * @return 등록된 담당자 응답
+	 */
 	@Transactional
 	public ManagerSaveResponse saveManager(AuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
-		// 요청 로그 저장
 		logService.saveManagerRequestLog(
 			authUser.getId(),
 			todoId,
 			managerSaveRequest.getManagerUserId()
 		);
 
-		// 일정을 만든 유저
 		User user = User.fromAuthUser(authUser);
 		Todo todo = todoRepository.findById(todoId)
 			.orElseThrow(() -> new InvalidRequestException("Todo not found"));
@@ -66,6 +77,12 @@ public class ManagerService {
 		);
 	}
 
+	/**
+	 * 특정 일정에 등록된 담당자 목록을 조회합니다.
+	 *
+	 * @param todoId 담당자를 조회할 일정 ID
+	 * @return 담당자 응답 목록
+	 */
 	public List<ManagerResponse> getManagers(long todoId) {
 		Todo todo = todoRepository.findById(todoId)
 			.orElseThrow(() -> new InvalidRequestException("Todo not found"));
@@ -83,6 +100,13 @@ public class ManagerService {
 		return dtoList;
 	}
 
+	/**
+	 * 일정 작성자가 등록된 담당자를 삭제합니다.
+	 *
+	 * @param authUser 인증된 사용자 정보
+	 * @param todoId 담당자를 삭제할 일정 ID
+	 * @param managerId 삭제할 담당자 ID
+	 */
 	@Transactional
 	public void deleteManager(AuthUser authUser, long todoId, long managerId) {
 		User user = User.fromAuthUser(authUser);

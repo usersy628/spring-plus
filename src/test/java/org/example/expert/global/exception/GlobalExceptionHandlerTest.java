@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * 도메인 예외가 기대한 공통 에러 응답으로 변환되는지 검증하는 테스트입니다.
+ */
 class GlobalExceptionHandlerTest {
 
 	private final GlobalExceptionHandler handler = new GlobalExceptionHandler();

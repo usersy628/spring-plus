@@ -14,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
+/**
+ * TodoRepository의 QueryDSL 기반 커스텀 조회 기능을 검증하는 테스트입니다.
+ */
 @DataJpaTest
 @Import(PersistenceConfig.class)
 class TodoRepositoryTest {
@@ -24,6 +27,9 @@ class TodoRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/**
+	 * 일정 단건 조회 시 작성자 정보가 함께 조회되는지 검증합니다.
+	 */
 	@Test
 	void findByIdWithUser는_todo와_user를_함께_조회한다() {
 		User user = new User("test@email.com", "password", UserRole.USER, "nickname");
